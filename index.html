@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ISTE/ASCD 2026 — Orlando Trip Itinerary</title>
+<title>ISTE/ASCD 2026 — Group Itinerary (5 People)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,6 +23,8 @@
     --blue-bg: rgba(59,130,246,0.12);
     --orange: #f97316;
     --orange-bg: rgba(249,115,22,0.12);
+    --pink: #ec4899;
+    --pink-bg: rgba(236,72,153,0.12);
     
     --day-sat: #f97316;
     --day-sat-bg: rgba(249,115,22,0.12);
@@ -62,9 +64,26 @@
   .header .badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 14px; }
   .badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; background: var(--surface2); border: 1px solid var(--border); color: var(--text-secondary); }
   .badge.icon { background: var(--accent-glow); border-color: rgba(139,92,246,0.25); color: var(--accent); }
+  .badge.guys { background: var(--blue-bg); border-color: rgba(59,130,246,0.25); color: var(--blue); }
+  .badge.girls { background: var(--pink-bg); border-color: rgba(236,72,153,0.25); color: var(--pink); }
 
   /* ─── CARD BASE ─── */
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+
+  /* ─── TEAM SECTION ─── */
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+  @media (max-width: 500px) { .team-grid { grid-template-columns: 1fr; } }
+  .team-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; position: relative; overflow: hidden; }
+  .team-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+  .team-card.hilton::before { background: #f97316; }
+  .team-card.rosen::before { background: #3b82f6; }
+  .team-card .team-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+  .team-person { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.78rem; }
+  .team-person:last-child { border-bottom: none; }
+  .team-person .person-name { font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .team-person .person-gender { font-size: 0.65rem; padding: 2px 8px; border-radius: 100px; font-weight: 600; }
+  .tag-male { background: var(--blue-bg); color: var(--blue); }
+  .tag-female { background: var(--pink-bg); color: var(--pink); }
 
   /* ─── FLIGHT SECTION ─── */
   .flight-section { margin-bottom: 28px; }
@@ -78,16 +97,10 @@
   .flight-info .flight-detail { font-size: 0.7rem; color: var(--text-secondary); margin-top: 1px; }
   .flight-seat { font-size: 0.7rem; font-weight: 600; color: var(--accent); font-family: 'JetBrains Mono', monospace; background: var(--accent-glow); padding: 2px 8px; border-radius: 6px; }
 
-  /* ─── INFO CARDS ─── */
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
-  @media (max-width: 500px) { .info-grid { grid-template-columns: 1fr; } }
-  .info-card .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); font-weight: 600; margin-bottom: 4px; }
-  .info-card .value { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-  .info-card .value small { font-weight: 400; color: var(--text-secondary); font-size: 0.8rem; }
-
   /* ─── BUDGET BAR ─── */
   .budget-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 28px; }
   .budget-section h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 10px; }
+  .budget-info { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; padding: 8px 12px; background: var(--surface2); border-radius: 10px; }
   .budget-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
   .budget-row:last-child { margin-bottom: 0; }
   .budget-label { font-size: 0.8rem; font-weight: 500; width: 80px; flex-shrink: 0; }
@@ -99,6 +112,12 @@
   .budget-bar-fill.bsnacks { background: linear-gradient(90deg, #a855f7, #d946ef); width: 13%; }
   .budget-bar-fill.bbuffer { background: linear-gradient(90deg, #64748b, #94a3b8); width: 13%; }
   .budget-price { font-size: 0.8rem; font-weight: 600; width: 50px; text-align: right; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+
+  /* ─── HOTEL COMPARISON ─── */
+  .hotel-compare { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 28px; overflow: hidden; }
+  .hotel-compare table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .hotel-compare th { padding: 14px 16px; text-align: left; font-weight: 700; }
+  .hotel-compare td { padding: 10px 16px; border-top: 1px solid var(--border); color: var(--text-secondary); }
 
   /* ─── SHOPPING ─── */
   .shopping-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
@@ -114,8 +133,14 @@
   /* ─── PACKING ─── */
   .packing-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 28px; }
   .packing-section h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 12px; }
+  .packing-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .packing-tab { padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--surface2); color: var(--text-secondary); }
+  .packing-tab.active-man { background: var(--blue-bg); border-color: rgba(59,130,246,0.25); color: var(--blue); }
+  .packing-tab.active-woman { background: var(--pink-bg); border-color: rgba(236,72,153,0.25); color: var(--pink); }
+  .packing-tab.shared { background: var(--accent-glow); border-color: rgba(139,92,246,0.25); color: var(--accent); }
   .packing-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 500px) { .packing-cols { grid-template-columns: 1fr; } }
+  .packing-cat { margin-bottom: 14px; }
   .packing-cat h4 { font-size: 0.75rem; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
   .packing-item { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.78rem; }
   .packing-item:last-child { border-bottom: none; }
@@ -157,6 +182,7 @@
   .tag-gym { background: rgba(249,115,22,0.15); color: #f97316; }
   .tag-travel { background: rgba(20,184,166,0.15); color: #14b8a6; }
   .tag-air { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .tag-group { background: rgba(236,72,153,0.15); color: #ec4899; }
   .tag-mixer { background: rgba(234,179,8,0.15); color: #eab308; }
   .tag-food-free { background: rgba(34,197,94,0.15); color: #22c55e; }
   .tag-waitlist { background: rgba(249,115,22,0.15); color: #f97316; }
@@ -170,16 +196,6 @@
   .meal-total .total-label { color: var(--text-secondary); }
   .meal-total .total-value { color: var(--text); }
 
-  /* ─── EXTRAS ─── */
-  .extras-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
-  @media (max-width: 500px) { .extras-grid { grid-template-columns: 1fr; } }
-  .extra-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
-  .extra-card h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-  .extra-card ul { list-style: none; padding: 0; }
-  .extra-card li { font-size: 0.75rem; color: var(--text-secondary); padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 6px; }
-  .extra-card li:last-child { border-bottom: none; }
-  .extra-card li .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-
   .footer { text-align: center; padding: 32px 0 16px; border-top: 1px solid var(--border); margin-top: 32px; }
   .footer p { color: var(--text-secondary); font-size: 0.75rem; }
 </style>
@@ -190,20 +206,61 @@
   <!-- ═══ HEADER ═══ -->
   <div class="header">
     <h1>🇯🇲 ISTE / ASCD 2026</h1>
-    <p class="subtitle">Orlando, FL · Kingston ✈️ Orlando · June 27 – July 2</p>
+    <p class="subtitle">Team Orlando · Kingston ✈️ MCO · June 27 – July 2</p>
     <div class="badge-row">
+      <span class="badge icon">👥 5 People</span>
+      <span class="badge guys">🙋‍♂️ 2 Guys</span>
+      <span class="badge girls">🙋‍♀️ 3 Girls</span>
       <span class="badge icon">📍 Orange County Convention Center</span>
-      <span class="badge icon">🏨 Hilton Orlando</span>
-      <span class="badge icon">🏨 Rosen Centre Hotel (team)</span>
-      <span class="badge icon">💰 $30/day food</span>
+      <span class="badge icon">🏨 3 @ Hilton · 2 @ Rosen</span>
+      <span class="badge icon">💰 $150/day food (5 × $30)</span>
       <span class="badge icon">🎫 ISTELive + ASCD</span>
-      <span class="badge icon">🪑 09D · 12C · 09C</span>
+    </div>
+  </div>
+
+  <!-- ═══ TEAM LAYOUT ═══ -->
+  <div style="margin-bottom: 28px;">
+    <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 10px; padding-left: 4px;">👥 Team Breakdown</h3>
+    <div class="team-grid">
+      <div class="team-card hilton">
+        <div class="team-title">🏨 Hilton Orlando <span style="font-weight:400; color:var(--text-secondary); font-size:0.75rem;">· 6001 Destination Pkwy</span></div>
+        <div class="team-person">
+          <span class="person-name">Willy</span>
+          <span class="person-gender tag-male">♂️ Male</span>
+        </div>
+        <div class="team-person">
+          <span class="person-name">Ken</span>
+          <span class="person-gender tag-male">♂️ Male</span>
+        </div>
+        <div class="team-person">
+          <span class="person-name">Brit</span>
+          <span class="person-gender tag-female">♀️ Female</span>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.7rem; color: var(--text-secondary); padding: 6px 8px; background: var(--surface2); border-radius: 8px;">
+          🛏️ Everyone in their own room
+        </div>
+      </div>
+      <div class="team-card rosen">
+        <div class="team-title">🏨 Rosen Centre Hotel <span style="font-weight:400; color:var(--text-secondary); font-size:0.75rem;">· 9840 International Dr</span></div>
+        <div class="team-person">
+          <span class="person-name">Atkins</span>
+          <span class="person-gender tag-female">♀️ Female</span>
+        </div>
+        <div class="team-person">
+          <span class="person-name">Del</span>
+          <span class="person-gender tag-female">♀️ Female</span>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.7rem; color: var(--text-secondary); padding: 6px 8px; background: var(--surface2); border-radius: 8px;">
+          🚗 5 min Uber or 20 min walk from Hilton
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ═══ FLIGHTS ═══ -->
   <div class="flight-section">
     <h3>✈️ Your Flights — Booking MXVQFN · American Airlines</h3>
+    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 10px; padding-left: 4px;">Other team members' flights TBD — coordinate to sync if possible</p>
 
     <div class="flight-row">
       <div class="flight-icon">🇯🇲</div>
@@ -219,7 +276,7 @@
       <div class="flight-icon">🔄</div>
       <div class="flight-info">
         <div class="flight-route">Layover at MIA</div>
-        <div class="flight-time">3h 20m — enough time to clear customs, grab food, find gate</div>
+        <div class="flight-time">3h 20m — clear customs, grab food, find gate</div>
       </div>
     </div>
 
@@ -249,7 +306,7 @@
       <div class="flight-icon">🔄</div>
       <div class="flight-info">
         <div class="flight-route">Layover at MIA</div>
-        <div class="flight-time">3h 01m — enough time, relax at gate</div>
+        <div class="flight-time">3h 01m — relax at gate</div>
       </div>
     </div>
 
@@ -264,67 +321,23 @@
     </div>
   </div>
 
-  <!-- ═══ QUICK INFO ═══ -->
-  <div class="info-grid">
-    <div class="card">
-      <div class="label">Hotel</div>
-      <div class="value">Hilton Orlando <small>· 6001 Destination Pkwy</small></div>
-      <div class="label" style="margin-top:6px;">Check-in</div>
-      <div class="value">3:00 PM <small>(you arrive ~3:30-4pm)</small></div>
-    </div>
-    <div class="card">
-      <div class="label">Distance to OCCC</div>
-      <div class="value">~10 min walk <small>(0.8 mi)</small></div>
-      <div class="label" style="margin-top:6px;">Check-out</div>
-      <div class="value">11:00 AM <small>(flight at 11:02 — early Uber)</small></div>
-    </div>
-  </div>
-
   <!-- ═══ HOTEL COMPARISON ═══ -->
-  <div class="card" style="margin-bottom: 28px; padding: 0; overflow: hidden;">
-    <table style="width:100%; border-collapse: collapse; font-size:0.8rem;">
+  <div class="hotel-compare">
+    <table>
       <thead>
         <tr style="background: var(--surface2);">
-          <th style="padding: 14px 16px; text-align:left; font-weight:700; width:30%;">Feature</th>
-          <th style="padding: 14px 16px; text-align:left; font-weight:700; width:35%; color:#f97316;">🏨 Hilton Orlando <br><small style="font-weight:400; color:var(--text-secondary);">6001 Destination Pkwy</small></th>
-          <th style="padding: 14px 16px; text-align:left; font-weight:700; width:35%; color:#3b82f6;">🏨 Rosen Centre Hotel <br><small style="font-weight:400; color:var(--text-secondary);">9840 International Dr</small></th>
+          <th style="width:30%;">Feature</th>
+          <th style="width:35%; color:#f97316;">🏨 Hilton Orlando <br><small style="font-weight:400; color:var(--text-secondary);">3 people · 6001 Destination Pkwy</small></th>
+          <th style="width:35%; color:#3b82f6;">🏨 Rosen Centre <br><small style="font-weight:400; color:var(--text-secondary);">2 people · 9840 International Dr</small></th>
         </tr>
       </thead>
       <tbody>
-        <tr style="border-top: 1px solid var(--border);">
-          <td style="padding: 10px 16px; color: var(--text-secondary); font-weight:500;">📍 Distance to OCCC</td>
-          <td style="padding: 10px 16px;">~10 min walk (0.8 mi)</td>
-          <td style="padding: 10px 16px;">~3 min walk (0.2 mi) — right next door</td>
-        </tr>
-        <tr style="border-top: 1px solid var(--border);">
-          <td style="padding: 10px 16px; color: var(--text-secondary); font-weight:500;">🏋️ Fitness</td>
-          <td style="padding: 10px 16px;"><b>24-hr</b> · 4,000 sq ft · free weights + cardio · pool view</td>
-          <td style="padding: 10px 16px;"><b>24-hr</b> · fitness center · spa & salon · steam room</td>
-        </tr>
-        <tr style="border-top: 1px solid var(--border);">
-          <td style="padding: 10px 16px; color: var(--text-secondary); font-weight:500;">🏊 Pool</td>
-          <td style="padding: 10px 16px;">3 pools · <b>892-ft lazy river</b> · waterslide · adult pool</td>
-          <td style="padding: 10px 16px;">Seasonal heated outdoor pool · 2 hot tubs · poolside bar</td>
-        </tr>
-        <tr style="border-top: 1px solid var(--border);">
-          <td style="padding: 10px 16px; color: var(--text-secondary); font-weight:500;">🍽️ Dining</td>
-          <td style="padding: 10px 16px;">Spencer's Steakhouse · David's Club · B-Line Diner · Tropics Pool Bar · Scratch Market</td>
-          <td style="padding: 10px 16px;">Everglades Restaurant · Banshoo Sushi · 98Forty Tapas · Harry's Poolside · Sam & Bubbe's Lounge · Red's Deli · Café Gauguin</td>
-        </tr>
-        <tr style="border-top: 1px solid var(--border);">
-          <td style="padding: 10px 16px; color: var(--text-secondary); font-weight:500;">💆 Spa</td>
-          <td style="padding: 10px 16px;">✅ eforea Spa · steam rooms · treatment rooms</td>
-          <td style="padding: 10px 16px;">✅ The Spa at Rosen Centre · salon services · steam room</td>
-        </tr>
-        <tr style="border-top: 1px solid var(--border);">
-          <td style="padding: 10px 16px; color: var(--text-secondary); font-weight:500;">🅿️ Parking</td>
-          <td style="padding: 10px 16px;">Self-park ~$24/day · Valet available</td>
-          <td style="padding: 10px 16px;">Self-park ~$22/day · Valet available</td>
-        </tr>
-        <tr style="border-top: 1px solid var(--border);">
-          <td style="padding: 10px 16px; color: var(--text-secondary); font-weight:500;">↔️ Distance apart</td>
-          <td colspan="2" style="padding: 10px 16px; color: var(--accent); font-weight:600;">~1 mile — 5 min Uber (~$7) or 20 min walk. Easy to meet up.</td>
-        </tr>
+        <tr><td style="font-weight:500;">📍 Distance to OCCC</td><td>~10 min walk (0.8 mi)</td><td>~3 min walk (0.2 mi)</td></tr>
+        <tr><td style="font-weight:500;">🏋️ Fitness</td><td><b>24-hr</b> · 4,000 sq ft · free weights + cardio</td><td><b>24-hr</b> · fitness center · steam room</td></tr>
+        <tr><td style="font-weight:500;">🏊 Pool</td><td>3 pools · 892-ft lazy river · waterslide</td><td>Heated outdoor pool · 2 hot tubs</td></tr>
+        <tr><td style="font-weight:500;">🍽️ Dining</td><td>Spencer's · David's Club · B-Line Diner · Tropics</td><td>Everglades · Banshoo Sushi · 98Forty Tapas · Red's Deli</td></tr>
+        <tr><td style="font-weight:500;">💆 Spa</td><td>✅ eforea Spa · steam rooms</td><td>✅ The Spa at Rosen Centre</td></tr>
+        <tr><td style="font-weight:500; color: var(--accent);">↔️ Apart</td><td colspan="2" style="color: var(--accent); font-weight:600;">~1 mile — 5 min Uber (~$7) or 20 min walk</td></tr>
       </tbody>
     </table>
   </div>
@@ -334,60 +347,56 @@
     <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 12px;">🔑 Can Team Visit Each Other's Hotels?</h3>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
       <div style="background: var(--surface2); border-radius: 12px; padding: 14px;">
-        <p style="font-weight: 700; color: #f97316; font-size: 0.85rem; margin-bottom: 6px;">🏨 Hilton Orlando (You)</p>
+        <p style="font-weight: 700; color: #f97316; font-size: 0.85rem; margin-bottom: 6px;">🏨 Hilton (3 of you)</p>
         <ul style="list-style: none; padding: 0; font-size: 0.75rem; color: var(--text-secondary);">
-          <li style="padding: 4px 0;">✅ <b>Rooms</b> — team can visit, hang out in your room</li>
-          <li style="padding: 4px 0;">✅ <b>Restaurants</b> — Spencer's, David's Club, B-Line Diner are open to public</li>
-          <li style="padding: 4px 0;">✅ <b>Lobby / bars</b> — anyone can come through</li>
-          <li style="padding: 4px 0;">❌ <b>Pool / lazy river</b> — room key or wristband required. Guests only</li>
-          <li style="padding: 4px 0;">❌ <b>Fitness center</b> — 24-hr access requires room key</li>
-          <li style="padding: 4px 0;">❌ <b>eforea Spa</b> — guests only, ID check at check-in</li>
+          <li style="padding: 4px 0;">✅ <b>Rooms</b> — Rosen team can visit your room</li>
+          <li style="padding: 4px 0;">✅ <b>Restaurants</b> — open to public</li>
+          <li style="padding: 4px 0;">✅ <b>Lobby / bars</b> — anyone welcome</li>
+          <li style="padding: 4px 0;">❌ <b>Pool / gym / spa</b> — room key required</li>
         </ul>
       </div>
       <div style="background: var(--surface2); border-radius: 12px; padding: 14px;">
-        <p style="font-weight: 700; color: #3b82f6; font-size: 0.85rem; margin-bottom: 6px;">🏨 Rosen Centre (Team)</p>
+        <p style="font-weight: 700; color: #3b82f6; font-size: 0.85rem; margin-bottom: 6px;">🏨 Rosen Centre (2 of you)</p>
         <ul style="list-style: none; padding: 0; font-size: 0.75rem; color: var(--text-secondary);">
-          <li style="padding: 4px 0;">✅ <b>Rooms</b> — you can visit, hang in their room</li>
-          <li style="padding: 4px 0;">✅ <b>Restaurants</b> — Everglades, Banshoo Sushi, 98Forty are open to public</li>
-          <li style="padding: 4px 0;">✅ <b>Lobby / Sam & Bubbe's Lounge</b> — open to anyone</li>
-          <li style="padding: 4px 0;">❌ <b>Pool / hot tubs</b> — registered guests only, key card check</li>
-          <li style="padding: 4px 0;">❌ <b>Fitness center</b> — registered guests only</li>
-          <li style="padding: 4px 0;">❌ <b>Spa</b> — guests only</li>
+          <li style="padding: 4px 0;">✅ <b>Rooms</b> — Hilton team can visit</li>
+          <li style="padding: 4px 0;">✅ <b>Restaurants / bars</b> — open to public</li>
+          <li style="padding: 4px 0;">❌ <b>Pool / gym / spa</b> — guests only</li>
         </ul>
       </div>
     </div>
     <div style="margin-top: 14px; padding: 12px; background: var(--accent-glow); border-radius: 12px; font-size: 0.78rem; color: var(--text);">
-      💡 <strong>Best meetup spots:</strong> OCCC lobby (everyone's there anyway), Rosen Centre restaurants (more affordable: Red's Deli, Café Gauguin), or the Hilton lobby bar. For a group dinner, 98Forty Tapas & Tequila at Rosen Centre is a fun vibe.
+      💡 <strong>Best group meetup spots:</strong> OCCC lobby (everyone's there anyway), Rosen Centre restaurants (Red's Deli, Café Gauguin are affordable), or Hilton lobby bar. For group dinner, 98Forty Tapas & Tequila at Rosen Centre is a fun vibe for 5.
     </div>
   </div>
 
   <!-- ═══ BUDGET ═══ -->
   <div class="budget-section">
-    <h3>💰 Daily Food Budget — $30/day × 6 days = $180 total</h3>
+    <h3>💰 Daily Food Budget — $30/person × 5 people = $150/day</h3>
+    <div class="budget-info">🍽️ $900 total for 6 days · $30/person/day · Pool money or pay individually</div>
     <div class="budget-row">
       <span class="budget-label" style="color:#eab308;">Breakfast</span>
       <div class="budget-bar-track"><div class="budget-bar-fill bfast"></div></div>
-      <span class="budget-price">$2</span>
+      <span class="budget-price">$10</span>
     </div>
     <div class="budget-row">
       <span class="budget-label" style="color:#22c55e;">Lunch</span>
       <div class="budget-bar-track"><div class="budget-bar-fill blunch"></div></div>
-      <span class="budget-price">$8</span>
+      <span class="budget-price">$40</span>
     </div>
     <div class="budget-row">
       <span class="budget-label" style="color:#3b82f6;">Dinner</span>
       <div class="budget-bar-track"><div class="budget-bar-fill bdinner"></div></div>
-      <span class="budget-price">$12</span>
+      <span class="budget-price">$60</span>
     </div>
     <div class="budget-row">
       <span class="budget-label" style="color:#a855f7;">Snacks</span>
       <div class="budget-bar-track"><div class="budget-bar-fill bsnacks"></div></div>
-      <span class="budget-price">$4</span>
+      <span class="budget-price">$20</span>
     </div>
     <div class="budget-row">
       <span class="budget-label" style="color:#64748b;">Buffer</span>
       <div class="budget-bar-track"><div class="budget-bar-fill bbuffer"></div></div>
-      <span class="budget-price">$4</span>
+      <span class="budget-price">$20</span>
     </div>
   </div>
 
@@ -396,65 +405,79 @@
     <div class="shop-card apple">
       <div class="shop-title">📱 Apple Store — iPhone</div>
       <div class="shop-detail">Apple Millenia · Mall at Millenia<br>4200 Conroy Rd, Orlando<br>Mon-Sat 10am-9pm, Sun 11-7</div>
-      <div class="shop-tip">🚗 10 min Uber from hotel (~$12-15)</div>
+      <div class="shop-tip">🚗 10 min Uber from hotel (~$12-15) — others may want to come</div>
     </div>
     <div class="shop-card meta">
       <div class="shop-title">🥽 Meta Ray-Ban Glasses</div>
       <div class="shop-detail">Sunglass Hut · Ray-Ban Store<br>Same mall — Mall at Millenia<br>Try on before buying</div>
-      <div class="shop-tip">💡 Same trip as Apple — one Uber</div>
+      <div class="shop-tip">💡 Same trip as Apple — one Uber for the group</div>
     </div>
   </div>
 
   <!-- ═══ PACKING ═══ -->
   <div class="packing-section">
-    <h3>🧳 Packing List (6-day trip)</h3>
+    <h3>🧳 Packing List (2 Guys + 3 Girls · 6 Days)</h3>
+    <div class="packing-tabs">
+      <span class="packing-tab active-man">🙋‍♂️ Guys (×2)</span>
+      <span class="packing-tab active-woman">🙋‍♀️ Females (×3)</span>
+      <span class="packing-tab shared">🤝 Shared</span>
+    </div>
+
     <div class="packing-cols">
       <div class="packing-cat">
-        <h4>👔 Conference</h4>
-        <div class="packing-item"><span>Light button-downs / polos (linen/cotton)</span><span class="qty">4</span></div>
-        <div class="packing-item"><span>Dark chinos / lightweight pants</span><span class="qty">3</span></div>
-        <div class="packing-item"><span>Light blazer / sweater (cold AC)</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Comfortable walking shoes (broken in!)</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Belt</span><span class="qty">1</span></div>
+        <h4>🙋‍♂️ Guys — Conference</h4>
+        <div class="packing-item"><span>Light button-downs / polos</span><span class="qty">4 each</span></div>
+        <div class="packing-item"><span>Dark chinos / lightweight pants</span><span class="qty">3 each</span></div>
+        <div class="packing-item"><span>Light blazer / sweater (cold AC)</span><span class="qty">1 each</span></div>
+        <div class="packing-item"><span>Comfortable walking shoes</span><span class="qty">1 pair</span></div>
+        <div class="packing-item"><span>Belt</span><span class="qty">1 each</span></div>
       </div>
       <div class="packing-cat">
-        <h4>🏋️ Gym & Casual</h4>
-        <div class="packing-item"><span>Shorts</span><span class="qty">2</span></div>
-        <div class="packing-item"><span>T-shirts / tanks</span><span class="qty">3</span></div>
-        <div class="packing-item"><span>Gym outfits (shorts + shirt)</span><span class="qty">2</span></div>
-        <div class="packing-item"><span>Workout shoes</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Swimsuit</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Sandals / flip-flops</span><span class="qty">1</span></div>
+        <h4>🙋‍♀️ Females — Conference</h4>
+        <div class="packing-item"><span>Blouses / tops (light fabrics)</span><span class="qty">4 each</span></div>
+        <div class="packing-item"><span>Dress pants / skirts / dresses</span><span class="qty">3 each</span></div>
+        <div class="packing-item"><span>Cardigan / light jacket (cold AC)</span><span class="qty">1 each</span></div>
+        <div class="packing-item"><span>Comfortable flats / wedges / sandals</span><span class="qty">1-2 pair</span></div>
+        <div class="packing-item"><span>Statement jewelry / accessories</span><span class="qty">as needed</span></div>
       </div>
       <div class="packing-cat">
-        <h4>🩲 Essentials</h4>
-        <div class="packing-item"><span>Underwear</span><span class="qty">9</span></div>
-        <div class="packing-item"><span>Socks (no-show + athletic)</span><span class="qty">6</span></div>
-        <div class="packing-item"><span>Sleepwear</span><span class="qty">1</span></div>
+        <h4>🙋‍♂️ Guys — Gym & Casual</h4>
+        <div class="packing-item"><span>Shorts</span><span class="qty">2 each</span></div>
+        <div class="packing-item"><span>T-shirts / tanks</span><span class="qty">3 each</span></div>
+        <div class="packing-item"><span>Gym outfits</span><span class="qty">2 each</span></div>
+        <div class="packing-item"><span>Workout shoes</span><span class="qty">1 pair</span></div>
+        <div class="packing-item"><span>Swimsuit</span><span class="qty">1 each</span></div>
+        <div class="packing-item"><span>Sandals / flip-flops</span><span class="qty">1 pair</span></div>
       </div>
       <div class="packing-cat">
-        <h4>🔌 Tech & Gear</h4>
-        <div class="packing-item"><span>Laptop + charger</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Power bank (10k mAh+)</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Phone cable (spare in bag)</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Reusable water bottle</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Small backpack / messenger</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Earbuds / headphones</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Airalo eSIM (install before trip)</span><span class="qty">1</span></div>
+        <h4>🙋‍♀️ Females — Casual & Pool</h4>
+        <div class="packing-item"><span>Summer dresses / rompers</span><span class="qty">2-3 each</span></div>
+        <div class="packing-item"><span>Shorts / skirts</span><span class="qty">2 each</span></div>
+        <div class="packing-item"><span>Tank tops / crop tops</span><span class="qty">3 each</span></div>
+        <div class="packing-item"><span>Swimsuits (bikini / one-piece)</span><span class="qty">2 each</span></div>
+        <div class="packing-item"><span>Cover-up / sarong</span><span class="qty">1 each</span></div>
+        <div class="packing-item"><span>Flip-flops / slides</span><span class="qty">1 pair</span></div>
       </div>
       <div class="packing-cat">
-        <h4>🌦️ Weather Gear</h4>
-        <div class="packing-item"><span>Compact umbrella</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Sunscreen SPF 50</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Sunglasses</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Bug repellent</span><span class="qty">1</span></div>
+        <h4>🩲 Essentials (Per Person)</h4>
+        <div class="packing-item"><span>Underwear</span><span class="qty">8-9 each</span></div>
+        <div class="packing-item"><span>Socks</span><span class="qty">5-6 pairs</span></div>
+        <div class="packing-item"><span>Sleepwear</span><span class="qty">1-2 sets</span></div>
+        <div class="packing-item"><span>Bras (girls — mix of styles)</span><span class="qty">4-5 each</span></div>
       </div>
       <div class="packing-cat">
-        <h4>🧴 Toiletries</h4>
-        <div class="packing-item"><span>Deodorant (+ spare for conference bag)</span><span class="qty">2</span></div>
-        <div class="packing-item"><span>Lip balm with SPF</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Hand sanitizer</span><span class="qty">1</span></div>
-        <div class="packing-item"><span>Ibuprofen / basic first aid</span><span class="qty">1</span></div>
+        <h4>🤝 Shared / Group Gear</h4>
+        <div class="packing-item"><span>Laptops + chargers</span><span class="qty">per person</span></div>
+        <div class="packing-item"><span>Power bank (20k mAh+)</span><span class="qty">2 for group</span></div>
+        <div class="packing-item"><span>Multi-USB charging hub</span><span class="qty">1-2</span></div>
+        <div class="packing-item"><span>Reusable water bottles</span><span class="qty">each</span></div>
+        <div class="packing-item"><span>Compact umbrella (Florida summer)</span><span class="qty">3 for group</span></div>
+        <div class="packing-item"><span>Sunscreen SPF 50</span><span class="qty">2 bottles</span></div>
+        <div class="packing-item"><span>Bug repellent</span><span class="qty">2 cans</span></div>
+        <div class="packing-item"><span>First aid kit</span><span class="qty">1 group</span></div>
+        <div class="packing-item"><span>Aloe vera (after-sun)</span><span class="qty">1 bottle</span></div>
+        <div class="packing-item"><span>Hand sanitizer + wipes</span><span class="qty">multiple</span></div>
+        <div class="packing-item"><span>Airalo eSIM (install before trip)</span><span class="qty">each</span></div>
       </div>
     </div>
   </div>
@@ -469,7 +492,7 @@
           <div class="day-date">Travel + Arrival Day</div>
         </div>
       </div>
-      <span class="day-type-badge">✈️ Fly KIN→MIA→MCO</span>
+      <span class="day-type-badge">✈️ Fly In + Check In</span>
     </div>
     <div class="day-body">
       <div class="time-block">
@@ -484,7 +507,7 @@
         <div class="time">6:22-9:20</div>
         <div class="activity">
           <div class="title">KIN → MIA (AA 2370 · Seat 09D)</div>
-          <div class="desc">1h 58m flight. Grab breakfast at airport or skip (land at 9:20).</div>
+          <div class="desc">1h 58m flight. Grab breakfast at MIA airport.</div>
           <span class="tag tag-air">✈️ In flight</span>
         </div>
       </div>
@@ -492,8 +515,9 @@
         <div class="time">9:20-1:40</div>
         <div class="activity">
           <div class="title">🔄 Layover in Miami — 3h 20m</div>
-          <div class="desc">Clear US customs, grab food (McDonald's or airport deli ~$8-10), find gate. Plenty of time, don't rush.</div>
+          <div class="desc">Clear US customs, grab food (airport ~$8-10). Find gate. Text group to coordinate arrivals.</div>
           <span class="tag tag-food">🍽️ ~$9</span>
+          <span class="tag tag-group">📱 Coordinate group</span>
         </div>
       </div>
       <div class="time-block">
@@ -505,36 +529,35 @@
         </div>
       </div>
       <div class="time-block">
-        <div class="time">3:00pm</div>
+        <div class="time">3:00-4:00</div>
         <div class="activity">
           <div class="title">🚕 Uber to Hilton Orlando</div>
-          <div class="desc">~15 min from MCO, ~$25-30. Check in (3pm earliest), drop bags.</div>
-          <span class="tag tag-travel">🚗 ~$28</span>
+          <div class="desc">~20 min from MCO. Check in (3pm), drop bags, freshen up. Rosen team does same.</div>
+          <span class="tag tag-travel">🚗 $25-30 Uber</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">4:00pm</div>
+        <div class="time">5:00-7:00</div>
         <div class="activity">
-          <div class="title">🚕 Uber to Walmart Supercenter</div>
-          <div class="desc">8990 Turkey Lake Rd (~5 min, ~$7-8). Buy supplies for the week: granola bars, yogurt, bananas, trail mix, water bottles, snacks. Keep in room mini-fridge (⚠️ no microwave).</div>
-          <span class="tag tag-shop">🛒 ~$20 supply haul</span>
+          <div class="title">👥 First Group Meetup</div>
+          <div class="desc">Rosen team comes to Hilton lobby or meet at OCCC area. Light stroll around I-Drive, grab dinner together.</div>
+          <span class="tag tag-group">👥 All 5 meet</span>
+          <span class="tag tag-food">🍽️ $10-12</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">6:00pm</div>
+        <div class="time">7:00-9:00</div>
         <div class="activity">
-          <div class="title">🏋️ Gym + Lazy River</div>
-          <div class="desc">24-hr fitness center: free weights + cardio, pool view. Then lazy river to unwind.</div>
-          <span class="tag tag-gym">🏋️ Free</span>
+          <div class="title">🌴 Explore I-Drive / Pool Hang</div>
+          <div class="desc">Check out the area, maybe lazy river or just chill. Early night — conference starts tomorrow.</div>
+          <span class="tag tag-travel">🌴 Explore</span>
         </div>
       </div>
-
       <div class="day-divider">
-        <div class="day-divider-label">🍽️ Food Budget</div>
-        <div class="meal-line"><span class="meal-name">☕ Breakfast: Airport or skip</span><span class="meal-price">$0-5</span></div>
-        <div class="meal-line"><span class="meal-name">🥪 Lunch: MIA airport food</span><span class="meal-price">~$9</span></div>
-        <div class="meal-line"><span class="meal-name">🍜 Dinner: Walmart supplies + Taco Bell</span><span class="meal-price">~$6</span></div>
-        <div class="meal-total"><span class="total-label">Day Total</span><span class="total-value">~$15-20</span></div>
+        <div class="day-divider-label">🍽️ Day 1 Meals (You)</div>
+        <div class="meal-line"><span class="meal-name">Airport breakfast</span><span class="meal-price">$9</span></div>
+        <div class="meal-line"><span class="meal-name">Dinner with group (I-Drive cheap eats)</span><span class="meal-price">$11</span></div>
+        <div class="meal-total"><span class="total-label">Total</span><span class="total-value">$20 ✓ under budget</span></div>
       </div>
     </div>
   </div>
@@ -546,81 +569,90 @@
         <div class="day-number">2</div>
         <div class="day-info">
           <h2>Sunday · June 28</h2>
-          <div class="day-date">Conference Day 1 · Opening Mainstage</div>
+          <div class="day-date">ISTELive Day 1</div>
         </div>
       </div>
-      <span class="day-type-badge">🎤 ISTE + ASCD</span>
+      <span class="day-type-badge">🎫 Conference Starts</span>
     </div>
     <div class="day-body">
       <div class="time-block">
-        <div class="time">6:30am</div>
+        <div class="time">6:30-7:15</div>
         <div class="activity">
-          <div class="title">🏋️ Gym</div>
-          <div class="desc">Wake up, move. 24-hr access with room key.</div>
-          <span class="tag tag-gym">🏋️ Free</span>
+          <div class="title">🏋️ Morning Gym</div>
+          <div class="desc">24-hr fitness center, 4,000 sq ft, free weights + cardio. Wake up before the conference.</div>
+          <span class="tag tag-gym">💪 Gym</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">7:30am</div>
+        <div class="time">7:15-8:00</div>
         <div class="activity">
-          <div class="title">🍌 Breakfast from Room</div>
-          <div class="desc">Granola bar + yogurt + banana from Walmart stash. Skip B-Line Diner ($19+).</div>
-          <span class="tag tag-food">🍽️ $0</span>
+          <div class="title">🥣 Breakfast — Room stash</div>
+          <div class="desc">Granola bar + yogurt + banana from room. Quick, cheap, no line.</div>
+          <span class="tag tag-food">🍽️ $2</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">8:00am</div>
+        <div class="time">8:00-8:30</div>
         <div class="activity">
-          <div class="title">Walk to OCCC → Meet Team</div>
-          <div class="desc">10 min walk. Your team is at Rosen Centre (9840 I-Drive) — ~3 min from OCCC. Meet in the main concourse or lobby before mainstage. 👋</div>
-          <span class="tag tag-conf">🎤 Conference</span>
+          <div class="title">🚶 Walk to OCCC + Meet Group</div>
+          <div class="desc">10 min walk. Meet Rosen team at OCCC lobby. Pick up badges, find first sessions.</div>
+          <span class="tag tag-conf">🎫 ISTELive</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">8-11am</div>
+        <div class="time">8:30-12:00</div>
         <div class="activity">
-          <div class="title">Opening Mainstage</div>
-          <div class="desc">Keynote + big announcements.</div>
-          <span class="tag tag-conf">🎤 Mainstage</span>
+          <div class="title">📚 Keynote + Morning Sessions</div>
+          <div class="desc">Main stage keynote, then breakout sessions. Split up or stay together — coordinate via chat.</div>
+          <span class="tag tag-conf">🎫 Conference</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">12-4pm</div>
+        <div class="time">12:00-1:00</div>
         <div class="activity">
-          <div class="title">Expo Hall Opens</div>
-          <div class="desc">Walk the floor, talk to vendors, collect swag. Best networking spot.</div>
-          <span class="tag tag-conf">🎤 Expo</span>
+          <div class="title">🍔 Group Lunch — Expo Hall or nearby</div>
+          <div class="desc">Expo hall food or walk to I-Drive fast food (Panda Express, Subway ~$7-8 each).</div>
+          <span class="tag tag-food">🍽️ $8/ea</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">1pm</div>
+        <div class="time">1:00-5:00</div>
         <div class="activity">
-          <div class="title">🥪 Lunch — Publix Sub / Expo Snacks</div>
-          <div class="desc">Pack snacks from stash. Expo hall sometimes has coffee/light bites.</div>
-          <span class="tag tag-food">🍽️ $0-4</span>
+          <div class="title">📚 Afternoon Sessions + Expo</div>
+          <div class="desc">Workshops, vendor expo, networking. Visit booths for swag.</div>
+          <span class="tag tag-conf">🎫 Conference</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">3-4:30pm</div>
+        <div class="time">5:00-6:00</div>
         <div class="activity">
-          <div class="title">Afternoon Sessions</div>
-          <div class="desc">AI in Ed sessions — see cool sessions list below.</div>
-          <span class="tag tag-conf">🎤 Sessions</span>
+          <div class="title">😴 Rest / Freshen Up</div>
+          <div class="desc">Back to hotels. Shower, change for dinner. Hilton guys hit the lazy river?</div>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">Evening</div>
+        <div class="time">6:30-8:30</div>
+        <div class="activity">
+          <div class="title">🌮 Group Dinner — I-Drive</div>
+          <div class="desc">Q'Kenan (Cuban), Chili's $10 lunch specials, or Denny's. Group of 5, keep it cheap.</div>
+          <span class="tag tag-food">🍽️ $12/ea</span>
+          <span class="tag tag-group">👥 All 5</span>
+        </div>
+      </div>
+      <div class="day-divider-label" style="margin-top:16px; border-top: 1px dashed rgba(255,255,255,0.06); padding-top:12px;">🎉 Evening Mixers (optional)</div>
+      <div class="time-block">
+        <div class="time">5-9:30</div>
         <div class="activity">
           <div class="title">🌍 EPCOT Scavenger Hunt</div>
-          <div class="desc">Find Your Path Around the World — an ISTE 2026 scavenger hunt & meetup. Explore EPCOT with fellow educators through challenges.</div>
-          <span class="tag tag-mixer">⏳ Waitlist</span>
+          <div class="desc">ISTE scavenger hunt & meetup at EPCOT. Connect with fellow educators.</div>
+          <span class="tag tag-waitlist">⏳ Waitlist</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">5:30-8:30</div>
         <div class="activity">
-          <div class="title">🔦 Discovery Education — The Power Within</div>
-          <div class="desc">Live music, light bites, and celebrating educators. At Cuba Libre.</div>
+          <div class="title">🔦 Discovery Education — Cuba Libre</div>
+          <div class="desc">Live music, light bites, celebrating educators. RSVP required.</div>
           <span class="tag tag-mixer">🎟️ RSVP</span>
         </div>
       </div>
@@ -628,33 +660,33 @@
         <div class="time">6-8pm</div>
         <div class="activity">
           <div class="title">🍽️ EdTech Bites Food Tour</div>
-          <div class="desc">Food tour with food + trivia. Details coming soon.</div>
+          <div class="desc">Food tour with trivia. Details TBD.</div>
           <span class="tag tag-waitlist">📍 TBD</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">6-8:30</div>
         <div class="activity">
-          <div class="title">🕹️ Edtech Arcade</div>
-          <div class="desc">Games + networking at Howl at the Moon.</div>
+          <div class="title">🕹️ Edtech Arcade — Howl at the Moon</div>
+          <div class="desc">Games + networking.</div>
           <span class="tag tag-waitlist">⏳ Waitlist</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">6-11pm</div>
         <div class="activity">
-          <div class="title">🎲 Board Game Meetup</div>
-          <div class="desc">300+ board games, food, drinks at Hyatt Regency (Regency Ballroom PQ). Free registration: bit.ly/iste26bgm</div>
+          <div class="title">🎲 Board Game Meetup — Hyatt Regency</div>
+          <div class="desc">300+ board games, food, drinks. Free: bit.ly/iste26bgm</div>
           <span class="tag tag-food-free">🎟️ Free</span>
         </div>
       </div>
-
       <div class="day-divider">
-        <div class="day-divider-label">🍽️ Food Budget</div>
-        <div class="meal-line"><span class="meal-name">🍌 Breakfast: Walmart stash</span><span class="meal-price">$0</span></div>
-        <div class="meal-line"><span class="meal-name">🥪 Lunch: Granola bar + trail mix</span><span class="meal-price">$0</span></div>
-        <div class="meal-line"><span class="meal-name">🍜 Dinner: Taco Bell on I-Drive</span><span class="meal-price">~$6</span></div>
-        <div class="meal-total"><span class="total-label">Day Total</span><span class="total-value">~$6</span></div>
+        <div class="day-divider-label">🍽️ Day 2 Meals (You)</div>
+        <div class="meal-line"><span class="meal-name">Breakfast (room stash)</span><span class="meal-price">$2</span></div>
+        <div class="meal-line"><span class="meal-name">Lunch (Panda/Subway)</span><span class="meal-price">$8</span></div>
+        <div class="meal-line"><span class="meal-name">Dinner with group</span><span class="meal-price">$12</span></div>
+        <div class="meal-line"><span class="meal-name">Snacks during conference</span><span class="meal-price">$4</span></div>
+        <div class="meal-total"><span class="total-label">Total</span><span class="total-value">$26 ✓ under $30</span></div>
       </div>
     </div>
   </div>
@@ -666,81 +698,75 @@
         <div class="day-number">3</div>
         <div class="day-info">
           <h2>Monday · June 29</h2>
-          <div class="day-date">Conference Day 2 · Expo Full Day</div>
+          <div class="day-date">ISTELive Day 2</div>
         </div>
       </div>
-      <span class="day-type-badge">🎤 ISTE + ASCD</span>
+      <span class="day-type-badge">🎫 Conference</span>
     </div>
     <div class="day-body">
       <div class="time-block">
-        <div class="time">6:30am</div>
+        <div class="time">6:30-7:15</div>
         <div class="activity">
-          <div class="title">🏋️ Gym</div>
-          <span class="tag tag-gym">🏋️ Free</span>
-        </div>
-      </div>
-      <div class="time-block">
-        <div class="time">7:30am</div>
-        <div class="activity">
-          <div class="title">🍌 Breakfast: Walmart stash</div>
-          <span class="tag tag-food">🍽️ $0</span>
+          <div class="title">🏋️ Morning Gym</div>
+          <div class="desc">Consistency — Hilton fitness center before the day starts.</div>
+          <span class="tag tag-gym">💪 Gym</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">7-9am</div>
         <div class="activity">
           <div class="title">☕ Kami Rise & Shine Breakfast</div>
-          <div class="desc">Complimentary breakfast hosted by Kami at OCCC Room W102A.</div>
+          <div class="desc">Complimentary breakfast hosted by Kami at OCCC Room W102A. Full — waitlist available.</div>
           <span class="tag tag-waitlist">⏳ Waitlist</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">8:30-5pm</div>
+        <div class="time">8:00-5:00</div>
         <div class="activity">
-          <div class="title">Sessions + Expo Hall (9am-5pm)</div>
-          <div class="desc">Full day. Best time to hit the expo. 👥 Meet up with team at Rosen — grab them from their lobby or coordinate a spot at the expo hall entrance.</div>
-          <span class="tag tag-conf">🎤 Conference</span>
+          <div class="title">📚 Full Conference Day</div>
+          <div class="desc">Keynotes, breakouts, expo. Lunch with group at expo or nearby ($8).</div>
+          <span class="tag tag-conf">🎫 Conference</span>
+          <span class="tag tag-food">🍽️ $8 lunch</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">Lunch</div>
-        <div class="activity">
-          <div class="title">🥪 Subway on I-Drive or Panda Express</div>
-          <div class="desc">5 min walk from OCCC. Footlong = 2 meals.</div>
-          <span class="tag tag-food">🍽️ ~$7</span>
-        </div>
-      </div>
-      <div class="time-block">
-        <div class="time">4-5:30pm</div>
+        <div class="time">4-5:30</div>
         <div class="activity">
           <div class="title">🤝 Teachers Unify Meetup</div>
-          <div class="desc">Meet the team working to end gun violence in schools. Support educators' voices and advocacy.</div>
+          <div class="desc">Meet the team working to end gun violence in schools. RSVP for location.</div>
           <span class="tag tag-mixer">🎟️ RSVP</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">5:30-8pm</div>
         <div class="activity">
-          <div class="title">✨ Learning Genie Mixer</div>
-          <div class="desc">Connect with educators, leaders, and innovators. At Rocks Lounge, Hyatt Regency.</div>
+          <div class="title">✨ Learning Genie Mixer — Rocks Lounge</div>
+          <div class="desc">Connect with educators, leaders, and innovators at Hyatt Regency.</div>
           <span class="tag tag-food-free">✅ Full</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">Evening</div>
+        <div class="time">5:00-7:00</div>
         <div class="activity">
-          <div class="title">ISTE+ASCD Member Social / Game Night</div>
-          <div class="desc">Official networking event. Free food + drinks. Board games. Great for meeting people.</div>
-          <span class="tag tag-conf">🎤 Networking</span>
+          <div class="title">🎉 Networking / Social Events</div>
+          <div class="desc">ISTELive often has evening socials, receptions with free food. Check the schedule — free dinner hack.</div>
+          <span class="tag tag-group">👥 Team option</span>
         </div>
       </div>
-
+      <div class="time-block">
+        <div class="time">7:00-9:00</div>
+        <div class="activity">
+          <div class="title">🌴 Rosen Centre Visit — 98Forty Tapas</div>
+          <div class="desc">Visit the Rosen team at their hotel. 98Forty Tapas & Tequila for drinks/apps, or Sam & Bubbe's Lounge.</div>
+          <span class="tag tag-group">👥 At Rosen</span>
+        </div>
+      </div>
       <div class="day-divider">
-        <div class="day-divider-label">🍽️ Food Budget</div>
-        <div class="meal-line"><span class="meal-name">🍌 Breakfast: Walmart stash</span><span class="meal-price">$0</span></div>
-        <div class="meal-line"><span class="meal-name">🥪 Lunch: Subway footlong</span><span class="meal-price">~$7</span></div>
-        <div class="meal-line"><span class="meal-name">🍜 Dinner: Member Social (free!)</span><span class="meal-price">$0</span></div>
-        <div class="meal-total"><span class="total-label">Day Total</span><span class="total-value">~$7</span></div>
+        <div class="day-divider-label">🍽️ Day 3 Meals (You)</div>
+        <div class="meal-line"><span class="meal-name">Breakfast (room stash)</span><span class="meal-price">$2</span></div>
+        <div class="meal-line"><span class="meal-name">Lunch (expo hall / nearby)</span><span class="meal-price">$8</span></div>
+        <div class="meal-line"><span class="meal-name">Dinner (maybe free reception, else cheap)</span><span class="meal-price">$12</span></div>
+        <div class="meal-total"><span class="total-label">Total</span><span class="total-value">$22 ✓</span></div>
       </div>
     </div>
   </div>
@@ -752,57 +778,68 @@
         <div class="day-number">4</div>
         <div class="day-info">
           <h2>Tuesday · June 30</h2>
-          <div class="day-date">Conference Day 3</div>
+          <div class="day-date">ISTELive Day 3 / ASCD Overlap</div>
         </div>
       </div>
-      <span class="day-type-badge">🎤 ISTE + ASCD</span>
+      <span class="day-type-badge">🎫 Conference + 🛍️ Shopping</span>
     </div>
     <div class="day-body">
       <div class="time-block">
-        <div class="time">6:30am</div>
+        <div class="time">6:30-7:15</div>
         <div class="activity">
-          <div class="title">🏋️ Gym or Lazy River</div>
-          <div class="desc">Mix it up — swim some laps.</div>
-          <span class="tag tag-gym">🏋️ Free</span>
+          <div class="title">🏋️ Morning Gym</div>
+          <div class="desc">Last gym day before shopping errands.</div>
+          <span class="tag tag-gym">💪 Gym</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">7:30am</div>
+        <div class="time">8:00-1:00</div>
         <div class="activity">
-          <div class="title">🍌 Breakfast: Stash</div>
-          <span class="tag tag-food">🍽️ $0</span>
+          <div class="title">📚 Morning Conference Sessions</div>
+          <div class="desc">Key sessions. Grab lunch at expo or nearby.</div>
+          <span class="tag tag-conf">🎫 Conference</span>
+          <span class="tag tag-food">🍽️ $8 lunch</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">8:15-5pm</div>
+        <div class="time">1:00-5:00</div>
         <div class="activity">
-          <div class="title">Full Conference Day</div>
-          <div class="desc">Sessions + Expo Hall (10am-5pm). Last full expo day. 👥 Coordinate with team — maybe do lunch together or hit the Expo Hall as a group.</div>
-          <span class="tag tag-conf">🎤 Conference</span>
+          <div class="title">🛍️ Mall at Millenia Trip (Optional for group)</div>
+          <div class="desc">🚗 Uber from hotel (~$12-15). Apple Store (iPhone), Sunglass Hut (Meta glasses). Others can shop at Zara, H&M, etc. One Uber, everyone benefits.</div>
+          <span class="tag tag-shop">🛍️ Shopping</span>
+          <span class="tag tag-group">👥 Group option</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">Lunch</div>
+        <div class="time">5:00-7:00</div>
         <div class="activity">
-          <div class="title">🥪 Remaining Walmart snacks or Panda</div>
-          <span class="tag tag-food">🍽️ $0-7</span>
+          <div class="title">🏊 Pool / Lazy River Chill</div>
+          <div class="desc">Back to Hilton. Unwind — lazy river with the crew.</div>
+          <span class="tag tag-travel">🌴 Chill</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">Evening</div>
+        <div class="time">7:00-9:00</div>
         <div class="activity">
-          <div class="title">🎤 EdTech Karaoke</div>
-          <div class="desc">Sing your heart out at The Vanguard — 578 N Orange Ave (~10 min Uber). Drinks, music, EdTech crowd.</div>
+          <div class="title">🍕 Group Dinner — Split a pizza</div>
+          <div class="desc">Pizza by the slice or a large pie to share. $3-4/person if you split.</div>
+          <span class="tag tag-food">🍽️ $12/ea</span>
+        </div>
+      </div>
+      <div class="time-block">
+        <div class="time">7-11pm</div>
+        <div class="activity">
+          <div class="title">🎤 EdTech Karaoke — The Vanguard</div>
+          <div class="desc">578 N Orange Ave (~10 min Uber). Sing with the EdTech crowd. Drinks, music, great vibes.</div>
           <span class="tag tag-mixer">🎟️ RSVP</span>
         </div>
       </div>
-
       <div class="day-divider">
-        <div class="day-divider-label">🍽️ Food Budget</div>
-        <div class="meal-line"><span class="meal-name">🍌 Breakfast: Walmart stash</span><span class="meal-price">$0</span></div>
-        <div class="meal-line"><span class="meal-name">🥪 Lunch: Walmart snacks / cheap slice</span><span class="meal-price">~$4</span></div>
-        <div class="meal-line"><span class="meal-name">🍜 Dinner: Panda Express</span><span class="meal-price">~$8</span></div>
-        <div class="meal-total"><span class="total-label">Day Total</span><span class="total-value">~$12</span></div>
+        <div class="day-divider-label">🍽️ Day 4 Meals (You)</div>
+        <div class="meal-line"><span class="meal-name">Breakfast</span><span class="meal-price">$2</span></div>
+        <div class="meal-line"><span class="meal-name">Lunch (mall food court)</span><span class="meal-price">$10</span></div>
+        <div class="meal-line"><span class="meal-name">Dinner (split pizza)</span><span class="meal-price">$12</span></div>
+        <div class="meal-total"><span class="total-label">Total</span><span class="total-value">$24 ✓</span></div>
       </div>
     </div>
   </div>
@@ -814,65 +851,60 @@
         <div class="day-number">5</div>
         <div class="day-info">
           <h2>Wednesday · July 1</h2>
-          <div class="day-date">Conference Final Day + Shopping</div>
+          <div class="day-date">ASCD Day / Final Conference Day</div>
         </div>
       </div>
-      <span class="day-type-badge">🎤 Closing + 🛍️ Mall</span>
+      <span class="day-type-badge">🎫 Conference</span>
     </div>
     <div class="day-body">
       <div class="time-block">
-        <div class="time">7:00am</div>
+        <div class="time">6:30-7:15</div>
         <div class="activity">
-          <div class="title">🍌 Breakfast: Finish the stash</div>
-          <span class="tag tag-food">🍽️ $0</span>
+          <div class="title">🏋️ Morning Gym</div>
+          <div class="desc">One last workout before pack-up day.</div>
+          <span class="tag tag-gym">💪 Gym</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">9-10am</div>
         <div class="activity">
           <div class="title">🎤 Community Demo Slam</div>
-          <div class="desc">Presented by Kami and Book Creator. OCCC Room W102A. AppSmash your tool with theirs!</div>
+          <div class="desc">Presented by Kami & Book Creator at OCCC Room W102A. AppSmash your tool with theirs!</div>
           <span class="tag tag-food-free">🎟️ Free</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">8:30am-1pm</div>
+        <div class="time">8:00-5:00</div>
         <div class="activity">
-          <div class="title">Final Morning Sessions</div>
-          <div class="desc">Last sessions. Expo Hall 10am-1pm final chance.</div>
-          <span class="tag tag-conf">🎤 Conference</span>
+          <div class="title">📚 Final Conference Day</div>
+          <div class="desc">Last keynotes, closing sessions. Make sure to hit must-see sessions. Lunch with group.</div>
+          <span class="tag tag-conf">🎫 Conference</span>
+          <span class="tag tag-food">🍽️ $8 lunch</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">1:15-2:30pm</div>
+        <div class="time">5:00-7:00</div>
         <div class="activity">
-          <div class="title">Closing Keynotes</div>
-          <span class="tag tag-conf">🎤 Closing</span>
+          <div class="title">🧳 Pack + Walmart Run</div>
+          <div class="desc">Uber to Walmart Supercenter (8990 Turkey Lake Rd, 5 min). Supplies, souvenirs, snacks for travel day.</div>
+          <span class="tag tag-travel">🛒 Supplies</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">3:00pm</div>
+        <div class="time">7:30-9:30</div>
         <div class="activity">
-          <div class="title">🚕 Mall at Millenia — Apple + Meta</div>
-          <div class="desc">Uber to Mall at Millenia (4200 Conroy Rd, ~$12-15). One trip, same mall: <b>Apple Store</b> for iPhone, <b>Sunglass Hut / Ray-Ban Store</b> for Meta glasses. Both in the same building.</div>
-          <span class="tag tag-shop">🛍️ Shopping</span>
+          <div class="title">🌮 Last Group Dinner</div>
+          <div class="desc">Closing dinner as a team. Rosen Centre (98Forty Tapas) or Hilton restaurant. Celebrate a successful conference.</div>
+          <span class="tag tag-food">🍽️ $15</span>
+          <span class="tag tag-group">👥 All 5</span>
         </div>
       </div>
-      <div class="time-block">
-        <div class="time">Evening</div>
-        <div class="activity">
-          <div class="title">Last Night — Pool / Spa</div>
-          <div class="desc">Adult pool or lazy river. Dinner at B-Line Diner (in hotel, ~$13).</div>
-          <span class="tag tag-food">🍽️ ~$13</span>
-        </div>
-      </div>
-
       <div class="day-divider">
-        <div class="day-divider-label">🍽️ Food Budget</div>
-        <div class="meal-line"><span class="meal-name">🍌 Breakfast: Last of Walmart stash</span><span class="meal-price">$0</span></div>
-        <div class="meal-line"><span class="meal-name">🥪 Lunch: Expo snacks / cheap slice</span><span class="meal-price">~$3</span></div>
-        <div class="meal-line"><span class="meal-name">🍜 Dinner: B-Line Diner (in hotel)</span><span class="meal-price">~$13</span></div>
-        <div class="meal-total"><span class="total-label">Day Total</span><span class="total-value">~$16</span></div>
+        <div class="day-divider-label">🍽️ Day 5 Meals (You)</div>
+        <div class="meal-line"><span class="meal-name">Breakfast</span><span class="meal-price">$2</span></div>
+        <div class="meal-line"><span class="meal-name">Lunch (expo)</span><span class="meal-price">$8</span></div>
+        <div class="meal-line"><span class="meal-name">Closing dinner</span><span class="meal-price">$15</span></div>
+        <div class="meal-total"><span class="total-label">Total</span><span class="total-value">$25 ✓</span></div>
       </div>
     </div>
   </div>
@@ -887,151 +919,77 @@
           <div class="day-date">Departure Day</div>
         </div>
       </div>
-      <span class="day-type-badge">🇯🇲 Fly MCO→MIA→KIN</span>
+      <span class="day-type-badge">✈️ Fly Home</span>
     </div>
     <div class="day-body">
       <div class="time-block">
-        <div class="time">6:00am</div>
+        <div class="time">6:00-7:00</div>
         <div class="activity">
-          <div class="title">🏋️ Early Gym Session</div>
-          <div class="desc">Squeeze in one last workout. Shower, pack up.</div>
-          <span class="tag tag-gym">🏋️ Free</span>
+          <div class="title">🧳 Check Out + Final Pack</div>
+          <div class="desc">Hotel check-out is 11am but your flight is 11:02. Check out early, store bags if needed. Rosen team check-out too.</div>
+          <span class="tag tag-travel">🧳 Pack</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">7:30am</div>
+        <div class="time">7:00-7:30</div>
         <div class="activity">
-          <div class="title">🍌 Breakfast: Leftover stash + check-out prep</div>
-          <span class="tag tag-food">🍽️ $0</span>
+          <div class="title">🥣 Quick Breakfast</div>
+          <div class="desc">Grab-and-go from room stash or hotel lobby.</div>
+          <span class="tag tag-food">🍽️ $2</span>
         </div>
       </div>
       <div class="time-block">
-        <div class="time">8:30am</div>
+        <div class="time">7:30-8:30</div>
         <div class="activity">
-          <div class="title">Check Out + Uber to MCO</div>
-          <div class="desc">Check out by 11am but head early for 11:02 flight. Uber ~$25-30, 15 min.</div>
-          <span class="tag tag-air">✈️ Depart MCO</span>
+          <div class="title">🚕 Uber to MCO</div>
+          <div class="desc">~20 min to airport. Allow 2.5h before flight. Group Uber if schedules align.</div>
+          <span class="tag tag-travel">🚗 $25-30</span>
+        </div>
+      </div>
+      <div class="time-block">
+        <div class="time">8:30-11:00</div>
+        <div class="activity">
+          <div class="title">🛫 MCO Security + Gate</div>
+          <div class="desc">Check bags, clear security, find gate. Grab snacks for the flight.</div>
         </div>
       </div>
       <div class="time-block">
         <div class="time">11:02-12:14</div>
         <div class="activity">
           <div class="title">MCO → MIA (AA 1712 · Seat 09C)</div>
-          <div class="desc">1h 12m. Grab airport breakfast/lunch at MCO or MIA.</div>
-          <span class="tag tag-air">✈️ Flight</span>
+          <div class="desc">1h 12m. Arrive Miami.</div>
+          <span class="tag tag-air">✈️ In flight</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">12:14-3:15</div>
         <div class="activity">
-          <div class="title">🔄 Layover in Miami — 3h 01m</div>
-          <div class="desc">Plenty of time. Lunch at MIA airport, relax at gate, duty free.</div>
-          <span class="tag tag-food">🍽️ ~$10</span>
+          <div class="title">🔄 Layover MIA — 3h 01m</div>
+          <div class="desc">Lunch at airport. Final group hang if schedules sync.</div>
+          <span class="tag tag-food">🍽️ $12</span>
         </div>
       </div>
       <div class="time-block">
         <div class="time">3:15-4:03</div>
         <div class="activity">
           <div class="title">MIA → KIN (AA 1400 · Seat 09C)</div>
-          <div class="desc">1h 48m. Welcome home! 🏝️</div>
-          <span class="tag tag-air">✈️ Arrive KIN</span>
+          <div class="desc">1h 48m. Welcome home! 🇯🇲</div>
+          <span class="tag tag-air">✈️ Home</span>
         </div>
       </div>
-
       <div class="day-divider">
-        <div class="day-divider-label">🍽️ Food Budget</div>
-        <div class="meal-line"><span class="meal-name">🍌 Breakfast: Leftover stash</span><span class="meal-price">$0</span></div>
-        <div class="meal-line"><span class="meal-name">🥪 Lunch: MCO or MIA airport food</span><span class="meal-price">~$10</span></div>
-        <div class="meal-line"><span class="meal-name">🍜 Dinner: On plane / home</span><span class="meal-price">$0</span></div>
-        <div class="meal-total"><span class="total-label">Day Total</span><span class="total-value">~$10</span></div>
+        <div class="day-divider-label">🍽️ Day 6 Meals (You)</div>
+        <div class="meal-line"><span class="meal-name">Breakfast (grab & go)</span><span class="meal-price">$2</span></div>
+        <div class="meal-line"><span class="meal-name">Airport lunch MIA</span><span class="meal-price">$12</span></div>
+        <div class="meal-total"><span class="total-label">Total</span><span class="total-value">$14 ✓ under budget</span></div>
       </div>
-    </div>
-  </div>
-
-  <!-- ═══ EXTRAS ═══ -->
-  <div class="extras-grid">
-    <div class="extra-card">
-      <h4>🎤 Cool Sessions to Check Out</h4>
-      <ul>
-        <li><span class="dot" style="background:#8B5CF6;"></span> The AI Toolbox: Best AI Tools for Schools</li>
-        <li><span class="dot" style="background:#22c55e;"></span> Empowering K-12 Classrooms with AI</li>
-        <li><span class="dot" style="background:#3b82f6;"></span> Custom AI Chatbots for Students (School AI booth)</li>
-        <li><span class="dot" style="background:#f97316;"></span> Igniting Creativity with AI Tools</li>
-        <li><span class="dot" style="background:#ec4899;"></span> AI Industry Leaders Panel</li>
-        <li><span class="dot" style="background:#14b8a6;"></span> Open the ISTE app early — popular sessions fill up fast</li>
-      </ul>
-    </div>
-    <div class="extra-card">
-      <h4>🤝 Meetups & Networking</h4>
-      <ul>
-        <li><span class="dot" style="background:#eab308;"></span> ISTE+ASCD Member Social (Mon/Tue · free food)</li>
-        <li><span class="dot" style="background:#22c55e;"></span> Game Night — board/card games</li>
-        <li><span class="dot" style="background:#3b82f6;"></span> Expo Hall — best networking, talk to vendors</li>
-        <li><span class="dot" style="background:#8B5CF6;"></span> Pointe Orlando — after-conference hub</li>
-        <li><span class="dot" style="background:#f97316;"></span> Hilton lobby — half the conference stays here</li>
-        <li><span class="dot" style="background:#14b8a6;"></span> Coffee stations at OCCC — easy to chat</li>
-      </ul>
-    </div>
-    <div class="extra-card">
-      <h4>📱 Airalo eSIM</h4>
-      <ul>
-        <li><span class="dot" style="background:#22c55e;"></span> <b>5GB / 30 days ~$14</b> — best for this trip</li>
-        <li><span class="dot" style="background:#3b82f6;"></span> Install Airalo app <b>before</b> you leave JA</li>
-        <li><span class="dot" style="background:#f97316;"></span> Activate QR code on MCO airport WiFi</li>
-        <li><span class="dot" style="background:#a855f7;"></span> Runs on AT&T/T-Mobile — solid in Orlando</li>
-      </ul>
-    </div>
-    <div class="extra-card">
-      <h4>🥘 Fast Food Near OCCC</h4>
-      <ul>
-        <li><span class="dot" style="background:#eab308;"></span> Taco Bell — 7623 I-Drive ($4-7)</li>
-        <li><span class="dot" style="background:#f97316;"></span> Panda Express — I-Drive ($7-10)</li>
-        <li><span class="dot" style="background:#22c55e;"></span> Subway — I-Drive ($6-9)</li>
-        <li><span class="dot" style="background:#3b82f6;"></span> McDonald's — Sand Lake & I-Drive ($5-8)</li>
-        <li><span class="dot" style="background:#ec4899;"></span> Denny's — I-Drive, any meal ($8-13)</li>
-        <li><span class="dot" style="background:#14b8a6;"></span> Pizza slices — multiple spots ($3-5)</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ═══ WEEK TOTALS ═══ -->
-  <div class="card" style="margin-bottom: 28px;">
-    <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 12px;">📊 Week Summary</h3>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.85rem;">
-      <div>
-        <p style="color: var(--text-secondary); font-size: 0.7rem;">Trip Duration</p>
-        <p style="font-weight: 700;">June 27 – July 2 (6 days, 5 nights)</p>
-      </div>
-      <div>
-        <p style="color: var(--text-secondary); font-size: 0.7rem;">Total Food Budget</p>
-        <p style="font-weight: 700;">$30/day × 6 = $180</p>
-      </div>
-      <div>
-        <p style="color: var(--text-secondary); font-size: 0.7rem;">Est. Food Spend</p>
-        <p style="font-weight: 700; color: #22c55e;">~$70-85</p>
-      </div>
-      <div>
-        <p style="color: var(--text-secondary); font-size: 0.7rem;">Walmart Supply Haul</p>
-        <p style="font-weight: 700;">~$20 (one-time)</p>
-      </div>
-      <div>
-        <p style="color: var(--text-secondary); font-size: 0.7rem;">Est. Uber/Travel</p>
-        <p style="font-weight: 700;">~$70-90</p>
-      </div>
-      <div>
-        <p style="color: var(--text-secondary); font-size: 0.7rem;">Money Left Over</p>
-        <p style="font-weight: 700; color: #f97316;">~$75-90 buffer</p>
-      </div>
-    </div>
-    <div style="margin-top: 14px; padding: 12px; background: var(--accent-glow); border-radius: 12px; font-size: 0.8rem; color: var(--text);">
-      💡 <strong>Pro tip:</strong> Walmart saves you ~$40-50 vs eating out every meal. Airalo eSIM saves you roaming fees. The Member Social on Monday has free food — plan for it.
     </div>
   </div>
 
   <!-- ═══ FOOTER ═══ -->
   <div class="footer">
-    <p>🇯🇲 ISTE/ASCD 2026 · Orlando, FL · June 27 – July 2</p>
-    <p style="margin-top: 4px; font-size: 0.7rem;">AA MXVQFN · KIN→MIA→MCO · Hilton Orlando · 6001 Destination Parkway</p>
+    <p>🇯🇲 Team Orlando 2026 · ISTELive + ASCD · June 27 – July 2</p>
+    <p style="margin-top: 4px; font-size: 0.7rem;">2 guys 🙋‍♂️ · 3 girls 🙋‍♀️ · 3 @ Hilton 🏨 · 2 @ Rosen 🏨 · $30/person/day 💰</p>
   </div>
 
 </div>
